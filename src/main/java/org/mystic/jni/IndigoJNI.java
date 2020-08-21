@@ -1,4 +1,4 @@
-package org.mystic;
+package org.mystic.jni;
 
 import java.io.File;
 
