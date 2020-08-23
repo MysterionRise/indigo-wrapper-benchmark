@@ -1,11 +1,10 @@
-package org.mystic.jna;
+package org.mystic.jnr;
 
-import com.sun.jna.Library;
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
+import jnr.ffi.LibraryLoader;
+import jnr.ffi.Pointer;
 
-public interface IndigoLibrary extends Library {
-    IndigoLibrary INSTANCE = Native.load("lib/libindigo.dylib", IndigoLibrary.class);
+public interface IndigoLibrary {
+    IndigoLibrary INSTANCE = LibraryLoader.create(IndigoLibrary.class).load("libindigo.dylib");
 
     int indigoLoadMoleculeFromString(String str);
 
@@ -18,5 +17,4 @@ public interface IndigoLibrary extends Library {
     Pointer indigoCanonicalSmiles(int molecule);
 
     String indigoGetLastError();
-
 }
