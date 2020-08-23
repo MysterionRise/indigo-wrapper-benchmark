@@ -4,7 +4,7 @@ import jnr.ffi.LibraryLoader;
 import jnr.ffi.Pointer;
 
 public interface IndigoLibrary {
-    IndigoLibrary INSTANCE = LibraryLoader.create(IndigoLibrary.class).load("libindigo.dylib");
+    IndigoLibrary INSTANCE = LibraryLoader.create(IndigoLibrary.class).load("lib/libindigo.dylib");
 
     int indigoLoadMoleculeFromString(String str);
 
