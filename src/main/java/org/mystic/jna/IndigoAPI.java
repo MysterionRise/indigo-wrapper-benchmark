@@ -24,7 +24,7 @@ public class IndigoAPI {
         return new IndigoObject(this, checkResult(IndigoLibrary.INSTANCE.indigoLoadMoleculeFromString(str)));
     }
 
-    public static String checkResultString(Object obj, Pointer result) {
+    public static String checkResultString(Pointer result) {
         if (result == Pointer.NULL) throw new RuntimeException(IndigoLibrary.INSTANCE.indigoGetLastError());
         return result.getString(0);
     }

@@ -17,4 +17,8 @@ public interface IndigoLibrary {
     Pointer indigoCanonicalSmiles(int molecule);
 
     String indigoGetLastError();
+
+    int indigoLayout(int object);
+
+    int indigoAromatize(int item);
 }

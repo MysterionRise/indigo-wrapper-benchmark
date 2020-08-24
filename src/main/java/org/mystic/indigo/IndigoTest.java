@@ -1,7 +1,8 @@
-package org.mystic.jnr;
+package org.mystic.indigo;
 
-import org.mystic.jna.IndigoAPI;
-import org.mystic.jna.IndigoObject;
+
+import com.epam.indigo.Indigo;
+import com.epam.indigo.IndigoObject;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -9,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class IndigoJNR {
+public class IndigoTest {
 
     public static void main(String[] args) throws IOException {
         long start = System.currentTimeMillis();
-        IndigoAPI indigoAPI = new IndigoAPI();
+        Indigo indigoAPI = new Indigo();
         List<String> smilesList = new ArrayList<>();
         Scanner in = new Scanner(Paths.get("src", "test", "resources", "smiles.csv"));
         while (in.hasNext()) {

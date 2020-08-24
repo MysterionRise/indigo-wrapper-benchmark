@@ -19,4 +19,8 @@ public interface IndigoLibrary extends Library {
 
     String indigoGetLastError();
 
+    int indigoLayout(int object);
+
+    int indigoAromatize(int item);
+
 }

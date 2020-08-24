@@ -12,6 +12,16 @@ public class IndigoObject {
 
     public String canonicalSmiles() {
         dispatcher.setSessionID();
-        return dispatcher.checkResultString(this, IndigoLibrary.INSTANCE.indigoCanonicalSmiles(self));
+        return dispatcher.checkResultString(IndigoLibrary.INSTANCE.indigoCanonicalSmiles(self));
+    }
+
+    public void layout() {
+        dispatcher.setSessionID();
+        dispatcher.checkResult(IndigoLibrary.INSTANCE.indigoLayout(self));
+    }
+
+    public void aromatize() {
+        dispatcher.setSessionID();
+        dispatcher.checkResult(IndigoLibrary.INSTANCE.indigoAromatize(self));
     }
 }
