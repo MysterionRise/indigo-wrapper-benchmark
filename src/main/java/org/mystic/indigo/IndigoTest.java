@@ -1,6 +1,5 @@
 package org.mystic.indigo;
 
-
 import com.epam.indigo.Indigo;
 import com.epam.indigo.IndigoObject;
 import org.mystic.jna.IndigoJNA;
@@ -38,9 +37,10 @@ public class IndigoTest {
         }
     }
 
+//    TODO fix native libs
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(IndigoJNA.class.getSimpleName())
+                .include(IndigoTest.class.getSimpleName())
                 .forks(1)
                 .build();
 

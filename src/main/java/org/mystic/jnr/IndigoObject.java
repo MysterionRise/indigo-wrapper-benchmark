@@ -1,6 +1,5 @@
 package org.mystic.jnr;
 
-
 public class IndigoObject {
 
     private final IndigoAPI dispatcher;

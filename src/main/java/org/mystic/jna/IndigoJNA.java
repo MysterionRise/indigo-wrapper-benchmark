@@ -34,7 +34,7 @@ public class IndigoJNA {
         }
     }
 
-    public static void main(String[] args) throws IOException, RunnerException {
+    public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(IndigoJNA.class.getSimpleName())
                 .forks(1)

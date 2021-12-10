@@ -1,6 +1,5 @@
 package org.mystic.jnr;
 
-
 import jnr.ffi.Pointer;
 
 public class IndigoAPI {
