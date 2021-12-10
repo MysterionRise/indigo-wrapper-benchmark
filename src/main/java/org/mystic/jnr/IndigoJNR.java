@@ -36,7 +36,7 @@ public class IndigoJNR {
         }
     }
 
-    public static void main(String[] args) throws IOException, RunnerException {
+    public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(IndigoJNR.class.getSimpleName())
                 .forks(1)
