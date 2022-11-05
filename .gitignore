@@ -16,3 +16,4 @@ Cargo.lock
 
 # mac files
 .DS_Store
+/jniwrapper-repo/
