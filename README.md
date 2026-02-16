@@ -73,9 +73,25 @@ Panama (FFM API) benchmark added.
 ### Results
 
 ```
-Benchmark                                Mode  Cnt    Score    Error  Units
-IndigoTest.benchmarkIndigo               avgt    5  880.540 ± 11.931  ms/op
-IndigoJNA.benchmarkJNA                   avgt    5  885.837 ±  2.177  ms/op
-IndigoJNR.benchmarkJNR                   avgt    5  906.014 ± 53.573  ms/op
-IndigoPanama.benchmarkPanama             avgt    5  892.054 ± 22.395  ms/op
+Benchmark                                Mode  Cnt    Score   Error  Units
+IndigoTest.benchmarkIndigo               avgt   30  875.593 ± 6.572  ms/op
+IndigoJNA.benchmarkJNA                   avgt   30  875.187 ± 4.852  ms/op
+IndigoJNR.benchmarkJNR                   avgt   30  873.689 ± 3.020  ms/op
+IndigoPanama.benchmarkPanama             avgt   30  874.586 ± 4.404  ms/op
 ```
+
+### FFI Overhead Micro-benchmark
+
+The molecule-processing benchmarks above are dominated by compute, hiding FFI overhead.
+This micro-benchmark isolates per-call marshalling cost by calling a trivial native function
+(`indigoSetSessionId` — void return, single long parameter).
+
+```
+Benchmark                                 Mode  Cnt    Score   Error  Units
+FFIOverheadBenchmark.setSessionId_EPAM    avgt       466.374          ns/op
+FFIOverheadBenchmark.setSessionId_JNA     avgt       460.973          ns/op
+FFIOverheadBenchmark.setSessionId_JNR     avgt         7.780          ns/op
+FFIOverheadBenchmark.setSessionId_Panama  avgt         4.487          ns/op
+```
+
+Panama's direct downcall stubs are the fastest (~4.5 ns), JNR's JIT-compiled stubs are close behind (~7.8 ns), while JNA-based approaches (including EPAM Indigo, which wraps JNA) are ~100x slower (~460 ns) due to reflection-based marshalling.
