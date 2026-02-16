@@ -1,0 +1,51 @@
+package org.mystic.panama;
+
+import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.RunnerException;
+import org.openjdk.jmh.runner.options.Options;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
+
+import java.io.IOException;
+import java.lang.foreign.Arena;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
+@Fork(value = 1, jvmArgs = {"--enable-native-access=ALL-UNNAMED"})
+@Warmup(iterations = 3, time = 1)
+@Measurement(iterations = 5, time = 1)
+@State(Scope.Thread)
+public class IndigoPanama {
+
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
+    public List<String> benchmarkPanama() throws IOException {
+        try (Arena arena = Arena.ofConfined()) {
+            IndigoAPI indigoAPI = new IndigoAPI(arena);
+            List<String> smilesList = new ArrayList<>();
+            Scanner in = new Scanner(Paths.get("src", "test", "resources", "smiles_sample.csv"));
+            while (in.hasNext()) {
+                String smile = in.nextLine();
+                IndigoObject indigoObject = indigoAPI.loadMolecule(smile);
+                indigoObject.layout();
+                indigoObject.aromatize();
+                smilesList.add(indigoObject.canonicalSmiles());
+            }
+            return smilesList;
+        }
+    }
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(IndigoPanama.class.getSimpleName())
+                .jvmArgs("--enable-native-access=ALL-UNNAMED")
+                .forks(1)
+                .build();
+
+        new Runner(opt).run();
+    }
+}

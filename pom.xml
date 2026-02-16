@@ -5,36 +5,33 @@
     <artifactId>indigo-wrapper-benchmark</artifactId>
     <version>1.0.0</version>
 
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <uberjar.name>benchmarks</uberjar.name>
-        <maven.compiler.source>19</maven.compiler.source>
-        <maven.compiler.target>19</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+        <jna.version>5.18.1</jna.version>
+        <jnr-ffi.version>2.2.18</jnr-ffi.version>
+        <javacpp.version>1.5.12</javacpp.version>
+        <jmh.version>1.37</jmh.version>
+        <slf4j.version>2.0.17</slf4j.version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>jniwrapper</id>
-            <url>file://${project.basedir}/jniwrapper-repo</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>5.12.1</version>
+            <version>${jna.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.jnr</groupId>
             <artifactId>jnr-ffi</artifactId>
-            <version>2.2.12</version>
+            <version>${jnr-ffi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacpp</artifactId>
-            <version>1.5.7</version>
+            <version>${javacpp.version}</version>
         </dependency>
         <dependency>
             <groupId>com.epam.indigo</groupId>
@@ -44,45 +41,24 @@
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
-            <version>1.35</version>
+            <version>${jmh.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-generator-annprocess</artifactId>
-            <version>1.35</version>
+            <version>${jmh.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.5.8</version>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.5.8</version>
+            <version>${slf4j.version}</version>
         </dependency>
-        <dependency>
-            <groupId>jniwrap</groupId>
-            <artifactId>jniwrap</artifactId>
-            <version>3.12</version>
-        </dependency>
-        <dependency>
-            <groupId>jniwrap</groupId>
-            <artifactId>jniwrap-generator</artifactId>
-            <version>3.12</version>
-        </dependency>
-        <dependency>
-            <groupId>jniwrap</groupId>
-            <artifactId>license</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>jniwrap</groupId>
-            <artifactId>antlr</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -90,14 +66,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.15.0</version>
                 <configuration>
-                    <release>17</release>
+                    <release>25</release>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.openjdk.jmh</groupId>
+                            <artifactId>jmh-generator-annprocess</artifactId>
+                            <version>${jmh.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -106,6 +90,16 @@
                         </goals>
                         <configuration>
                             <finalName>${uberjar.name}</finalName>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
@@ -120,6 +114,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
