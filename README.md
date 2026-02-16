@@ -88,10 +88,10 @@ This micro-benchmark isolates per-call marshalling cost by calling a trivial nat
 
 ```
 Benchmark                                 Mode  Cnt    Score   Error  Units
-FFIOverheadBenchmark.setSessionId_EPAM    avgt       466.374          ns/op
-FFIOverheadBenchmark.setSessionId_JNA     avgt       460.973          ns/op
-FFIOverheadBenchmark.setSessionId_JNR     avgt         7.780          ns/op
-FFIOverheadBenchmark.setSessionId_Panama  avgt         4.487          ns/op
+FFIOverheadBenchmark.setSessionId_EPAM    avgt   30  462.160 ± 3.581  ns/op
+FFIOverheadBenchmark.setSessionId_JNA     avgt   30  458.980 ± 2.928  ns/op
+FFIOverheadBenchmark.setSessionId_JNR     avgt   30    7.695 ± 0.038  ns/op
+FFIOverheadBenchmark.setSessionId_Panama  avgt   30    4.394 ± 0.063  ns/op
 ```
 
-Panama's direct downcall stubs are the fastest (~4.5 ns), JNR's JIT-compiled stubs are close behind (~7.8 ns), while JNA-based approaches (including EPAM Indigo, which wraps JNA) are ~100x slower (~460 ns) due to reflection-based marshalling.
+Panama's direct downcall stubs are the fastest (~4.4 ns), JNR's JIT-compiled stubs are close behind (~7.7 ns), while JNA-based approaches (including EPAM Indigo, which wraps JNA) are ~100x slower (~460 ns) due to reflection-based marshalling.
